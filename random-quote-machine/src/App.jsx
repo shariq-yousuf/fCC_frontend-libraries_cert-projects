@@ -1,10 +1,9 @@
 import React from "react"
-import "./App.css"
 
 function App() {
   return (
     <>
-      <h1>Random Quote Machine</h1>
+      <h1 className="bg-blue-500 p-4">Random Quote Machine</h1>
     </>
   )
 }
