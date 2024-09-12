@@ -1,17 +1,16 @@
 import React from "react"
 
-const QuoteBox = () => {
+const QuoteBox = ({ hadith, getHadithFromAPI }) => {
   return (
     <div
       id="quote-box"
-      className="min-h-64 md:w-2/5 w-11/12 bg-gray-600 px-8 py-4 flex flex-col justify-evenly"
+      className="min-h-64 md:min-w-2/5 md:max-w-5xl w-11/12 bg-gray-600 px-8 py-4 flex flex-col justify-evenly gap-3"
     >
       <div id="text" className="text-3xl">
-        Life is not measured by the number of breaths we take, but by the
-        moments that take our breath away.
+        {hadith.hadithEnglish}
       </div>
       <div id="author" className="text-right text-xl">
-        - Sir Claus Moser
+        - Prophet Muhammad (S.A.W)
       </div>
       <div id="buttons-container" className="flex justify-between">
         <a
@@ -24,8 +23,9 @@ const QuoteBox = () => {
         <button
           id="new-quote"
           className="text-lg bg-red-500 px-4 py-1 hover:bg-red-600"
+          onClick={getHadithFromAPI}
         >
-          New Quote
+          Next
         </button>
       </div>
     </div>
