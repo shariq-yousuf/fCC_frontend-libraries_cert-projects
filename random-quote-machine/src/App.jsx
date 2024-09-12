@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import QuoteBox from "./components/QuoteBox"
 
 function App() {
   const [hadith, setHadith] = useState({})
+  const textEl = useRef()
 
   useEffect(() => {
     getHadithFromAPI()
   }, [])
 
   const getHadithFromAPI = () => {
+    if (textEl.current) textEl.current.style.opacity = "0"
+
     const randomNumber = Math.ceil(Math.random() * 4000)
     const URL = `https://www.hadithapi.com/public/api/hadiths?apiKey=$2y$10$Oq25553u9h455mMqwpWfZeaIDxbwrs4TelrZHfurQpp8VVJBVep6&paginate=1&page=${randomNumber}`
 
@@ -20,7 +23,11 @@ function App() {
 
   return (
     <div className="flex justify-center items-center p-8 min-h-dvh bg-red-500">
-      <QuoteBox hadith={hadith} getHadithFromAPI={getHadithFromAPI} />
+      <QuoteBox
+        hadith={hadith}
+        getHadithFromAPI={getHadithFromAPI}
+        textEl={textEl}
+      />
     </div>
   )
 }
