@@ -8,7 +8,6 @@ function App() {
   useEffect(() => {
     getHadithFromAPI()
   }, [])
-
   const getHadithFromAPI = () => {
     if (textEl.current) textEl.current.style.opacity = "0"
 
@@ -18,7 +17,7 @@ function App() {
     fetch(URL)
       .then((response) => response.json())
       .then((data) => setHadith(data.hadiths.data[0]))
-      .catch((error) => console.error(error))
+      .catch((error) => setHadith({error: "Something went wrong, please try again!"}))
   }
 
   return (

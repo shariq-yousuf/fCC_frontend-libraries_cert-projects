@@ -13,10 +13,10 @@ const QuoteBox = ({ hadith, getHadithFromAPI, textEl }) => {
         className={`text-3xl transition-all	duration-1000`}
         ref={textEl}
       >
-        {hadith?.hadithEnglish ? hadith.hadithEnglish : hadith.hadithEnglish}
+        {hadith.hadithEnglish ? hadith.hadithEnglish : hadith.error}
       </div>
       <div id="author" className="text-right text-xl">
-        - Prophet Muhammad (S.A.W)
+        {hadith.hadithEnglish ? "- Prophet Muhammad (S.A.W)" : ""}
       </div>
       <div id="buttons-container" className="flex justify-between">
         <a
