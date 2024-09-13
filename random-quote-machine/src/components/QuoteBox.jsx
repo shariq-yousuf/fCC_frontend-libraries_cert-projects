@@ -27,7 +27,7 @@ const QuoteBox = ({
     <>
       <div
         id="quote-box"
-        className="transition-all	duration-1000 min-h-96 md:min-w-2/5 md:max-w-5xl w-11/12 bg-slate-500 text-white m-4 px-8 py-4 flex flex-col justify-between gap-3"
+        className="transition-all	duration-1000 min-h-96 md:min-w-2/5 md:max-w-5xl w-dvw bg-slate-500 text-white md:m-4 px-8 py-4 flex flex-col justify-between gap-3"
         ref={quoteBox}
       >
         {!isFetched ? (
@@ -46,10 +46,10 @@ const QuoteBox = ({
         ) : (
           <div
             ref={textEl}
-            className="transition-all	duration-1000 text-lg flex flex-col justify-evenly gap-2"
+            className="transition-all	duration-1000 md:text-lg flex flex-col justify-evenly gap-2"
           >
             <div id="narrator">{englishNarrator}</div>
-            <div id="text" className={`text-3xl transition-all duration-1000`}>
+            <div id="text" className={`md:text-3xl transition-all duration-1000`}>
               {hadithEnglish ? hadithEnglish : hadith.error}
             </div>
             <div id="reference" className="flex justify-between">
@@ -79,14 +79,14 @@ const QuoteBox = ({
             target="_blank"
             title="Tweet this Hadith"
             id="tweet-quote"
-            className="text-lg px-4 py-1 transition-all	duration-1000"
+            className="md:text-lg px-4 py-1 transition-all	duration-1000"
             style={{ backgroundColor: bgColor }}
           >
             <i className="fa-brands fa-x-twitter"></i>
           </a>
           <button
             id="new-quote"
-            className="text-lg px-4 py-1 transition-all	duration-1000"
+            className="md:text-lg px-4 py-1 transition-all	duration-1000"
             style={{ backgroundColor: bgColor }}
             onClick={handleClick}
           >

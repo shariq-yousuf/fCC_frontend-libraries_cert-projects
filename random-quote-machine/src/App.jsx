@@ -68,7 +68,7 @@ function App() {
 
   return (
     <div
-      className={`flex justify-center items-start p-8 min-h-dvh transition-all	duration-1000`}
+      className={`flex justify-center items-start p-4 md:p-8 min-h-dvh transition-all	duration-1000`}
       style={{ backgroundColor: bgColor }}
     >
       {hadith ? (
