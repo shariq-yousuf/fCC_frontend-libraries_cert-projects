@@ -3,10 +3,11 @@ import QuoteBox from "./components/QuoteBox"
 import tailwindColors from "tailwindcss/colors"
 
 function App() {
-  const [hadith, setHadith] = useState({})
+  const [hadith, setHadith] = useState("")
   const [bgColor, setBgColor] = useState(tailwindColors["pink"][500])
   const textEl = useRef()
   const quoteBox = useRef()
+  const [isFetchFailed, setIsFetchFailed] = useState(false)
 
   useEffect(() => {
     getHadithFromAPI()
@@ -25,7 +26,8 @@ function App() {
       if (textEl.current) textEl.current.style.opacity = "1"
       // if (quoteBox.current) quoteBox.current.style.maxHeight = "3000px"
     } catch (error) {
-      setHadith({ error: "Something went wrong, please try again!" })
+      setHadith("")
+      setIsFetchFailed(true)
       if (textEl.current) textEl.current.style.opacity = "1"
     }
   }
@@ -66,14 +68,29 @@ function App() {
       className={`flex justify-center items-center p-8 min-h-dvh transition-all	duration-1000`}
       style={{ backgroundColor: bgColor }}
     >
-      <QuoteBox
-        hadith={hadith}
-        getHadithFromAPI={getHadithFromAPI}
-        bgColor={bgColor}
-        getBgColor={getBgColor}
-        textEl={textEl}
-        quoteBox={quoteBox}
-      />
+      {hadith ? (
+        <QuoteBox
+          hadith={hadith}
+          getHadithFromAPI={getHadithFromAPI}
+          bgColor={bgColor}
+          getBgColor={getBgColor}
+          textEl={textEl}
+          quoteBox={quoteBox}
+        />
+      ) : (
+        isFetchFailed && (
+          <div className="bg-stone-500 p-4 text-white text-2xl">
+            <span>Something went wrong, please try again!</span>
+            <button
+              onClick={getHadithFromAPI}
+              className="px-4 py-1 ms-4"
+              style={{ backgroundColor: bgColor }}
+            >
+              Refresh
+            </button>
+          </div>
+        )
+      )}
     </div>
   )
 }
