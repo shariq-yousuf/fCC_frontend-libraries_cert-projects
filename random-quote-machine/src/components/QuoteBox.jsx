@@ -52,7 +52,7 @@ const QuoteBox = ({
             <div id="text" className={`md:text-3xl transition-all duration-1000`}>
               {hadithEnglish ? hadithEnglish : hadith.error}
             </div>
-            <div id="reference" className="flex justify-between">
+            <div id="reference" className="flex flex-wrap justify-between">
               <div id="book">Book: {bookName}</div>
               <div id="chapter">
                 Chapter: {chapterNumber}. {chapterEnglish}
