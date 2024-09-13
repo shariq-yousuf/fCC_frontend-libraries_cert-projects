@@ -73,7 +73,8 @@ const QuoteBox = ({
           "\n" +
           chapterNumber +
           ". " +
-          chapterEnglish
+          chapterEnglish +
+          "\n\n"
       )}`}
             target="_blank"
             title="Tweet this Hadith"
