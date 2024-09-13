@@ -27,7 +27,7 @@ const QuoteBox = ({
     <>
       <div
         id="quote-box"
-        className="transition-all	duration-1000 md:min-w-2/5 md:max-w-5xl w-11/12 bg-stone-500 text-white px-8 py-4 flex flex-col justify-evenly gap-3"
+        className="transition-all	duration-1000 min-h-96 md:min-w-2/5 md:max-w-5xl w-11/12 bg-slate-500 text-white m-4 px-8 py-4 flex flex-col justify-between gap-3"
         ref={quoteBox}
       >
         {!isFetched ? (
