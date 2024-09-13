@@ -1,12 +1,23 @@
 import React from "react"
 
-const QuoteBox = ({ hadith, getHadithFromAPI, textEl }) => {
+const QuoteBox = ({
+  hadith,
+  getHadithFromAPI,
+  bgColor,
+  getBgColor,
+  textEl,
+}) => {
   if (textEl.current) textEl.current.style.opacity = "1"
+
+  const handleClick = () => {
+    getBgColor()
+    getHadithFromAPI()
+  }
 
   return (
     <div
       id="quote-box"
-      className="min-h-64 md:min-w-2/5 md:max-w-5xl w-11/12 bg-gray-600 text-white px-8 py-4 flex flex-col justify-evenly gap-3"
+      className="min-h-64 md:min-w-2/5 md:max-w-5xl w-11/12 transition-all	duration-1000 bg-slate-600 text-white px-8 py-4 flex flex-col justify-evenly gap-3"
     >
       <div
         id="text"
@@ -27,14 +38,16 @@ const QuoteBox = ({ hadith, getHadithFromAPI, textEl }) => {
           target="_blank"
           title="Tweet this Hadith"
           id="tweet-quote"
-          className="text-lg bg-red-500 px-4 py-1 hover:bg-red-600"
+          className="text-lg px-4 py-1 transition-all	duration-1000"
+          style={{ backgroundColor: bgColor }}
         >
-          <i class="fa-brands fa-x-twitter"></i>
+          <i className="fa-brands fa-x-twitter"></i>
         </a>
         <button
           id="new-quote"
-          className="text-lg bg-red-500 px-4 py-1 hover:bg-red-600"
-          onClick={getHadithFromAPI}
+          className="text-lg px-4 py-1 transition-all	duration-1000"
+          style={{ backgroundColor: bgColor }}
+          onClick={handleClick}
         >
           Next
         </button>
