@@ -6,18 +6,18 @@ const QuoteBox = ({
   bgColor,
   getBgColor,
   textEl,
+  quoteBox,
 }) => {
-  if (textEl.current) textEl.current.style.opacity = "1"
-
   const handleClick = () => {
-    getBgColor()
     getHadithFromAPI()
+    getBgColor()
   }
 
   return (
     <div
       id="quote-box"
-      className="min-h-64 md:min-w-2/5 md:max-w-5xl w-11/12 transition-all	duration-1000 bg-slate-600 text-white px-8 py-4 flex flex-col justify-evenly gap-3"
+      className="transition-all	duration-1000 md:min-w-2/5 md:max-w-5xl w-11/12 bg-slate-600 text-white px-8 py-4 flex flex-col justify-evenly gap-3"
+      ref={quoteBox}
     >
       <div
         id="text"

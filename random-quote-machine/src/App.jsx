@@ -6,23 +6,28 @@ function App() {
   const [hadith, setHadith] = useState({})
   const [bgColor, setBgColor] = useState(tailwindColors["pink"][500])
   const textEl = useRef()
+  const quoteBox = useRef()
 
   useEffect(() => {
     getHadithFromAPI()
   }, [])
 
-  const getHadithFromAPI = () => {
-    if (textEl.current) textEl.current.style.opacity = "0"
-
+  const getHadithFromAPI = async () => {
     const randomNumber = getRandomNumber("ceil", 4000)
     const URL = `https://www.hadithapi.com/public/api/hadiths?apiKey=$2y$10$Oq25553u9h455mMqwpWfZeaIDxbwrs4TelrZHfurQpp8VVJBVep6&paginate=1&page=${randomNumber}`
 
-    fetch(URL)
-      .then((response) => response.json())
-      .then((data) => setHadith(data.hadiths.data[0]))
-      .catch((error) =>
-        setHadith({ error: "Something went wrong, please try again!" })
-      )
+    try {
+      if (textEl.current) textEl.current.style.opacity = "0"
+      // if (quoteBox.current) quoteBox.current.style.maxHeight = `0px`
+      const response = await fetch(URL)
+      const data = await response.json()
+      setHadith(data.hadiths.data[0])
+      if (textEl.current) textEl.current.style.opacity = "1"
+      // if (quoteBox.current) quoteBox.current.style.maxHeight = "3000px"
+    } catch (error) {
+      setHadith({ error: "Something went wrong, please try again!" })
+      if (textEl.current) textEl.current.style.opacity = "1"
+    }
   }
 
   const getBgColor = () => {
@@ -67,6 +72,7 @@ function App() {
         bgColor={bgColor}
         getBgColor={getBgColor}
         textEl={textEl}
+        quoteBox={quoteBox}
       />
     </div>
   )
