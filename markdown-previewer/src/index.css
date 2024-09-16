@@ -1,3 +1,66 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+* {
+  box-sizing: border-box;
+  /* margin: 0; */
+  /* padding: 0; */
+}
+
+body {
+  background-color: rgb(65, 124, 149);
+  color: white;
+  overflow: hidden;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100vh;
+}
+
+.app-title {
+  margin: 0;
+  text-align: center;
+  font-size: 3rem;
+}
+
+.app-subtitle {
+  margin: 0;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+#editor,
+#preview {
+  width: 45dvw;
+  height: 80dvh;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  overflow: auto;
+}
+
+#preview {
+  background-color: white;
+  color: black;
+  padding: 1rem;
+}
+
+textarea {
+  resize: none;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+img {
+  width: 100%;
+}

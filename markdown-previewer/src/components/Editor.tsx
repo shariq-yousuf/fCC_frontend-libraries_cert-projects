@@ -16,15 +16,7 @@ const Editor = ({ inputValue, setInputValue, setMarkedValue }: Props) => {
     setMarkedValue(markedValue)
   }
 
-  return (
-    <textarea
-      id="editor"
-      onChange={onInputChange}
-      value={inputValue}
-      className="w-[45%] h-[80dvh] resize-none border-2 border-black text-black text-lg p-2 
-                  overflow-auto"
-    />
-  )
+  return <textarea id="editor" onChange={onInputChange} value={inputValue} />
 }
 
 export default Editor
