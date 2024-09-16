@@ -5,9 +5,10 @@
 }
 
 body {
-  background-color: rgb(65, 124, 149);
-  color: white;
+  background-color: #fdba74;
+  color: black;
   overflow: hidden;
+  font-family: Roboto, sans-serif;
 }
 
 .app {
@@ -42,16 +43,17 @@ main {
   padding: 0.5rem;
   font-size: 1.2rem;
   overflow: auto;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
 }
 
 #preview {
-  background-color: white;
-  color: black;
   padding: 1rem;
 }
 
 textarea {
   resize: none;
+  border: none;
 }
 
 table,

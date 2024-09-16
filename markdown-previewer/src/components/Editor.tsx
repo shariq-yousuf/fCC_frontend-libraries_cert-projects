@@ -1,19 +1,26 @@
 import { marked } from "marked"
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 
 interface Props {
   inputValue: string
   setInputValue: React.Dispatch<React.SetStateAction<string>>
-  setMarkedValue: React.Dispatch<React.SetStateAction<string>>
+  setMarkedValue: React.Dispatch<React.SetStateAction<string | Promise<string>>>
 }
 
 const Editor = ({ inputValue, setInputValue, setMarkedValue }: Props) => {
-  const onInputChange = async (event: ChangeEvent<HTMLTextAreaElement>) => {
+  useEffect(() => {
+    markValue(inputValue)
+  }, [])
+
+  const onInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const value = event.target.value
     setInputValue(value)
 
-    const markedValue = await marked.parse(value)
-    setMarkedValue(markedValue)
+    markValue(value)
+  }
+
+  const markValue = (value: string) => {
+    setMarkedValue(marked.parse(value))
   }
 
   return <textarea id="editor" onChange={onInputChange} value={inputValue} />
