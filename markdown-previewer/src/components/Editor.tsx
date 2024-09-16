@@ -1,5 +1,5 @@
 import { marked } from "marked"
-import { ChangeEvent, useEffect, useState } from "react"
+import { ChangeEvent, useEffect } from "react"
 
 interface Props {
   inputValue: string
@@ -20,7 +20,7 @@ const Editor = ({ inputValue, setInputValue, setMarkedValue }: Props) => {
   }
 
   const markValue = (value: string) => {
-    setMarkedValue(marked.parse(value))
+    setMarkedValue(marked.parse(value, { breaks: true }))
   }
 
   return <textarea id="editor" onChange={onInputChange} value={inputValue} />

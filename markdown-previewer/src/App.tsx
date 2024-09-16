@@ -37,7 +37,7 @@ function anotherExample(firstLine, lastLine) {
 1. Use just 1s if you want!
 1. And last but not least, let's not forget embedded images:
 
-![freeCodeCamp Logo](https://cdn.freecodecamp.org/testable-projects-fcc/images/fcc_secondary.svg)
+![freeCodeCamp Logo](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSTja7ORhL0RWVPZf2mjDVVkmjyeVvnDRpBQ&s)
 `
   const [inputValue, setInputValue] = useState<string>(initialInputState)
   const [markedValue, setMarkedValue] = useState<string | Promise<string>>("")

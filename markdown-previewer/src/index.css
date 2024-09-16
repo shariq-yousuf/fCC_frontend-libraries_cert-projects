@@ -1,11 +1,9 @@
 * {
   box-sizing: border-box;
-  /* margin: 0; */
-  /* padding: 0; */
 }
 
 body {
-  background-color: #fdba74;
+  background-color: #ffffff;
   color: black;
   overflow: hidden;
   font-family: Roboto, sans-serif;
@@ -43,7 +41,7 @@ main {
   padding: 0.5rem;
   font-size: 1.2rem;
   overflow: auto;
-  background-color: #ffffff;
+  background-color: #e2f6f1;
   color: rgb(0, 0, 0);
 }
 
@@ -54,6 +52,7 @@ main {
 textarea {
   resize: none;
   border: none;
+  outline: none;
 }
 
 table,
