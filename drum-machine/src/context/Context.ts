@@ -1,5 +1,5 @@
 import { createContext } from "react"
 
-const MsgContext = createContext((msg: string) => {})
+const MsgContext = createContext((_msg: string) => {})
 
 export default MsgContext

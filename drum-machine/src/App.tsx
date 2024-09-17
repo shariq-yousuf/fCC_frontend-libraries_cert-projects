@@ -28,7 +28,7 @@ function App() {
       id: 3,
       key: "E",
       src: "https://cdn.freecodecamp.org/testable-projects-fcc/audio/Heater-1.mp3",
-      displayMsg: "Yes All the same",
+      displayMsg: "Yes All are same",
     },
     {
       id: 4,
@@ -80,7 +80,10 @@ function App() {
   return (
     <MsgContext.Provider value={showMsg}>
       <main className="flex justify-center items-center h-dvh bg-red-300">
-        <div id="drum-machine" className="min-h-2/3 w-1/2 p-4 bg-indigo-200">
+        <div
+          id="drum-machine"
+          className="min-h-2/3 w-[90dvw] md:w-1/2 p-4 bg-indigo-200"
+        >
           <Display displayMsg={displayMsg} />
           <Drum audioClips={audioClips} />
         </div>

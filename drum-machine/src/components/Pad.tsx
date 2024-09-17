@@ -17,7 +17,7 @@ const Pad = ({ clip }: { clip: AudioClip }) => {
   return (
     <div
       onClick={playAudio}
-      className="drum-pad w-[30%] h-20 flex justify-center items-center bg-indigo-300 cursor-pointer text-3xl"
+      className="drum-pad w-[30%] h-20 flex justify-center items-center bg-indigo-300 cursor-pointer text-3xl shadow-xl active:shadow-none"
       id={id.toString()}
     >
       <audio src={src} className="clip" id={key} ref={audioRef}></audio>
