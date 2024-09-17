@@ -1,8 +1,14 @@
+import Display from "./components/Display"
+import Drum from "./components/Drum"
+
 function App() {
   return (
-    <>
-      <h1>Hello</h1>
-    </>
+    <main className="flex justify-center items-center h-dvh bg-red-300">
+      <div id="drum-machine" className="h-2/3 w-1/2 p-4 bg-indigo-200">
+        <Display />
+        <Drum/>
+      </div>
+    </main>
   )
 }
 
