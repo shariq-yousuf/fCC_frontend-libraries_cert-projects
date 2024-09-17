@@ -30,6 +30,7 @@ body {
 
 main {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
 }
@@ -64,4 +65,22 @@ td {
 
 img {
   width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    overflow: auto;
+  }
+
+  main {
+    padding-bottom: 1rem;
+  }
+
+  #editor,
+  #preview {
+    width: 95dvw;
+    height: 50dvh;
+    font-size: 1rem;
+    /* margin-bottom: 2rem; */
+  }
 }
