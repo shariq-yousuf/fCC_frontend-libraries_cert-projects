@@ -1,5 +1,7 @@
+import { useState } from "react"
 import ButtonsContainer from "./components/ButtonsContainer"
 import Display from "./components/Display"
+import DisplayContext from "./context/DisplayContext"
 
 export interface ButtonType {
   id: number
@@ -15,12 +17,12 @@ function App() {
     },
     {
       id: 2,
-      value: "/",
+      value: " / ",
       type: "divide",
     },
     {
       id: 3,
-      value: "x",
+      value: " x ",
       type: "multiply",
     },
     {
@@ -40,7 +42,7 @@ function App() {
     },
     {
       id: 7,
-      value: "-",
+      value: " - ",
       type: "subtract",
     },
     {
@@ -60,7 +62,7 @@ function App() {
     },
     {
       id: 11,
-      value: "+",
+      value: " + ",
       type: "add",
     },
     {
@@ -94,17 +96,27 @@ function App() {
       type: "decimal",
     },
   ]
+  const [displayValue, setDisplayValue] = useState("0")
+
+  const doMath = () => {
+    const expArr = displayValue.split(" ").filter(Boolean)
+    console.log(expArr)
+  }
 
   return (
-    <main className="flex justify-center items-center h-dvh bg-slate-400 p-4">
-      <div
-        id="app-container"
-        className="p-4 bg-orange-300 max-w-7xl w-[95%] md:w-5/12"
-      >
-        <Display />
-        <ButtonsContainer buttonsData={buttonsData} />
-      </div>
-    </main>
+    <DisplayContext.Provider
+      value={{ setDisplayValue: setDisplayValue, doMath: doMath }}
+    >
+      <main className="flex justify-center items-center h-dvh bg-slate-400 p-4">
+        <div
+          id="app-container"
+          className="p-4 bg-orange-300 max-w-7xl w-[95%] md:w-5/12"
+        >
+          <Display displayValue={displayValue} />
+          <ButtonsContainer buttonsData={buttonsData} />
+        </div>
+      </main>
+    </DisplayContext.Provider>
   )
 }
 
