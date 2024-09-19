@@ -11,10 +11,6 @@ const Button = ({ button: { value, type } }: { button: ButtonType }) => {
     return newVal.join("")
   }
 
-  const isOperator = (val: string) => {
-    return /[\+\-\/x]/.test(val)
-  }
-
   const createNewDisplayValue = () => {
     if (value === "=") {
       context!.doMath()
@@ -22,18 +18,23 @@ const Button = ({ button: { value, type } }: { button: ButtonType }) => {
       context!.setDisplayValue("0")
     } else {
       context!.setDisplayValue((prev) => {
-        if (prev === "0" || prev === " - ") {
+        if (prev === "0") {
           // preventing operator in the beginning except for minus
-          return isOperator(value.trim()) && value.trim() !== "-" ? "0" : value
+          return context!.isOperator(value.trim()) && value.trim() !== "-"
+            ? "0"
+            : value
         }
         // preventing double 0's after operator
         else if (prev.endsWith(" 0")) {
           return createNewValue(prev, 1)
         }
         // if (value === + | - | x | /); preventing double operators
-        else if (isOperator(value.trim())) {
+        else if (context!.isOperator(value.trim())) {
+          if (prev.trim() === "-" && value.trim() !== "-") {
+            return "0"
+          }
           // if already operator exist replace it otherwise add it
-          if (isOperator(prev[prev.length - 2])) {
+          else if (context!.isOperator(prev[prev.length - 2])) {
             return createNewValue(prev, 2)
           } else {
             return prev + value
