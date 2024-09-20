@@ -19,7 +19,7 @@ const Button = ({ button: { value, type } }: { button: ButtonType }) => {
     } else if (value === "AC") {
       context!.setDisplayValue("0")
     } else {
-      if (context!.displayValue.length < 30) {
+      if (context!.displayValue.length < 20) {
         context!.setDisplayValue((prev) => {
           if (prev === "0") {
             // preventing operator in the beginning except for minus
