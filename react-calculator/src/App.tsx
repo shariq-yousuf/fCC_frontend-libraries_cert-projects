@@ -135,7 +135,7 @@ function App() {
       })
 
     // remove trailing operator
-    if (isOperator(expArr[expArr.length - 1] as string)) {
+    while (isOperator(expArr[expArr.length - 1] as string)) {
       expArr.pop()
     }
     // fix negative numbers
