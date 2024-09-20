@@ -111,10 +111,6 @@ function App() {
               return (item as number) / (expArr[index + 2] as number)
             case "x":
               return (item as number) * (expArr[index + 2] as number)
-            // case "+":
-            //   return (item as number) + (expArr[index + 2] as number)
-            // case "-":
-            //   return (item as number) - (expArr[index + 2] as number)
             default:
               return item
           }
