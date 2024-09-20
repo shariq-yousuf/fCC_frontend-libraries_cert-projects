@@ -7,10 +7,11 @@ let isDoubleOperator = false
 const Button = ({ button: { value, type } }: { button: ButtonType }) => {
   const context = useContext(DisplayContext)
 
-  const createNewValue = (val: string, len: number): string => {
-    const newVal = val.split("")
-    newVal[newVal.length - len] = value.trim()
-    return newVal.join("")
+  const createNewValue = (val: string): string => {
+    console.log(val.split(" "))
+    const newVal = val.split(" ").filter(Boolean)
+    newVal[newVal.length - 1] = value
+    return newVal.join(" ")
   }
 
   const createNewDisplayValue = () => {
@@ -28,7 +29,7 @@ const Button = ({ button: { value, type } }: { button: ButtonType }) => {
         }
         // preventing double 0's after operator
         else if (prev.endsWith(" 0")) {
-          return createNewValue(prev, 1)
+          return createNewValue(prev)
         }
         // preventing double operators
         else if (context!.isOperator(value.trim())) {
@@ -44,9 +45,15 @@ const Button = ({ button: { value, type } }: { button: ButtonType }) => {
               isDoubleOperator = true
               return prev + value
             } else if (!isDoubleOperator) {
-              return createNewValue(prev, 2)
+              return createNewValue(prev)
             } else {
-              return prev
+              isDoubleOperator = false
+
+              const newVal = prev.split(" ").filter(Boolean)
+              newVal.pop()
+              newVal[newVal.length - 1] = value
+
+              return newVal.join(" ")
             }
           } else {
             isDoubleOperator = false
