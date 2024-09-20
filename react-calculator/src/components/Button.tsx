@@ -2,6 +2,8 @@ import { useContext } from "react"
 import { ButtonType } from "../App"
 import DisplayContext from "../context/DisplayContext"
 
+let isDoubleOperator = false
+
 const Button = ({ button: { value, type } }: { button: ButtonType }) => {
   const context = useContext(DisplayContext)
 
@@ -28,15 +30,26 @@ const Button = ({ button: { value, type } }: { button: ButtonType }) => {
         else if (prev.endsWith(" 0")) {
           return createNewValue(prev, 1)
         }
-        // if (value === + | - | x | /); preventing double operators
+        // preventing double operators
         else if (context!.isOperator(value.trim())) {
+          const lastItem = prev.split(" ").filter(Boolean).slice(-1).join("")
+
           if (prev.trim() === "-" && value.trim() !== "-") {
             return "0"
           }
           // if already operator exist replace it otherwise add it
-          else if (context!.isOperator(prev[prev.length - 2])) {
-            return createNewValue(prev, 2)
+          else if (context!.isOperator(lastItem)) {
+            // allowing negative number after other operator
+            if (value.trim() === "-" && lastItem !== "-" && lastItem !== "+") {
+              isDoubleOperator = true
+              return prev + value
+            } else if (!isDoubleOperator) {
+              return createNewValue(prev, 2)
+            } else {
+              return prev
+            }
           } else {
+            isDoubleOperator = false
             return prev + value
           }
         } else if (value === ".") {
