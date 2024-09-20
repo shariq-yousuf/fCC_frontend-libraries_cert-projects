@@ -173,6 +173,7 @@ function App() {
   return (
     <DisplayContext.Provider
       value={{
+        displayValue: displayValue,
         setDisplayValue: setDisplayValue,
         doMath: doMath,
         isOperator: isOperator,
@@ -181,7 +182,7 @@ function App() {
       <main className="flex justify-center items-center h-dvh bg-slate-400 p-4">
         <div
           id="app-container"
-          className="p-4 bg-orange-300 max-w-7xl w-[95%] md:w-5/12"
+          className="p-4 bg-stone-500 shadow-2xl max-w-7xl w-[95%] md:w-5/12"
         >
           <Display displayValue={displayValue} />
           <ButtonsContainer buttonsData={buttonsData} />
