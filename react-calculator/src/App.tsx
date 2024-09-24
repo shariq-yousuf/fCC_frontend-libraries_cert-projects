@@ -10,6 +10,7 @@ export interface ButtonType {
 }
 
 let isDoubleOperator = false
+let isItResult = false
 function App() {
   const buttonsData: ButtonType[] = [
     {
@@ -169,6 +170,8 @@ function App() {
       .filter((item) => item !== "removed")
   }
   const doMath = () => {
+    isItResult = true
+
     let expArr = displayValue
       .split(" ")
       .filter(Boolean)
@@ -227,66 +230,63 @@ function App() {
       doMath()
     } else if (value === "AC") {
       setDisplayValue("0")
-    } else {
-      if (displayValue.length < 20) {
-        setDisplayValue((prev) => {
-          if (prev === "0") {
-            // preventing operator in the beginning except for minus
-            return isOperator(value.trim()) && value.trim() !== "-"
-              ? "0"
-              : value
+    } else if (displayValue.length < 20) {
+      if (!isOperator(value.trim()) && isItResult) {
+        setDisplayValue("0")
+      }
+      isItResult = false
+
+      setDisplayValue((prev) => {
+        if (prev === "0") {
+          // preventing operator in the beginning except for minus
+          return isOperator(value.trim()) && value.trim() !== "-" ? "0" : value
+        }
+        // preventing double 0's after operator
+        else if (prev.endsWith(" 0")) {
+          return createNewValue(prev, value)
+        }
+        // preventing double operators
+        else if (isOperator(value.trim())) {
+          const lastItem = prev.split(" ").filter(Boolean).slice(-1).join("")
+
+          if (prev.trim() === "-" && value.trim() !== "-") {
+            return "0"
           }
-          // preventing double 0's after operator
-          else if (prev.endsWith(" 0")) {
-            return createNewValue(prev, value)
-          }
-          // preventing double operators
-          else if (isOperator(value.trim())) {
-            const lastItem = prev.split(" ").filter(Boolean).slice(-1).join("")
-
-            if (prev.trim() === "-" && value.trim() !== "-") {
-              return "0"
-            }
-            // if already operator exist replace it otherwise add it
-            else if (isOperator(lastItem)) {
-              // allowing negative number after other operator
-              if (
-                value.trim() === "-" &&
-                lastItem !== "-" &&
-                lastItem !== "+"
-              ) {
-                isDoubleOperator = true
-                return prev + value
-              } else if (!isDoubleOperator) {
-                return createNewValue(prev, value)
-              } else {
-                isDoubleOperator = false
-
-                const newVal = prev.split(" ").filter(Boolean)
-                newVal.pop()
-                newVal[newVal.length - 1] = value
-
-                return newVal.join(" ")
-              }
+          // if already operator exist replace it otherwise add it
+          else if (isOperator(lastItem)) {
+            // allowing negative number after other operator
+            if (value.trim() === "-" && lastItem !== "-" && lastItem !== "+") {
+              isDoubleOperator = true
+              return prev + value
+            } else if (!isDoubleOperator) {
+              return createNewValue(prev, value)
             } else {
               isDoubleOperator = false
-              return prev + value
-            }
-          } else if (value === ".") {
-            // preventing double decimals between operators
-            const lastItem = prev.split(" ").slice(-1).join("")
-            if (lastItem.includes(".")) {
-              return prev
-            } else if (lastItem.length) {
-              return prev + value
-            } else {
-              return prev + "0" + value
+
+              const newVal = prev.split(" ").filter(Boolean)
+              newVal.pop()
+              newVal[newVal.length - 1] = value
+
+              return newVal.join(" ")
             }
           } else {
+            isDoubleOperator = false
             return prev + value
           }
-        })
-      }
+        } else if (value === ".") {
+          // preventing double decimals between operators
+          const lastItem = prev.split(" ").slice(-1).join("")
+          if (lastItem.includes(".")) {
+            return prev
+          } else if (lastItem.length) {
+            return prev + value
+          } else {
+            return prev + "0" + value
+          }
+        } else {
+          return prev + value
+        }
+      })
     }
   }
 
