@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ButtonsContainer from "./components/ButtonsContainer"
 import Display from "./components/Display"
 import DisplayContext from "./context/DisplayContext"
@@ -8,6 +8,8 @@ export interface ButtonType {
   value: string
   type: string
 }
+
+let isDoubleOperator = false
 function App() {
   const buttonsData: ButtonType[] = [
     {
@@ -98,6 +100,50 @@ function App() {
   ]
   const [displayValue, setDisplayValue] = useState("0")
 
+  useEffect(() => {
+    window.addEventListener("keydown", (e) => {
+      switch (e.key) {
+        case "Backspace":
+          setDisplayValue("0")
+          break
+        case "1":
+        case "2":
+        case "3":
+        case "4":
+        case "5":
+        case "6":
+        case "7":
+        case "8":
+        case "9":
+        case "0":
+        case ".":
+          createNewDisplayValue(e.key)
+          break
+        case "/":
+        case "-":
+        case "+":
+          createNewDisplayValue(" " + e.key + " ")
+          break
+        case "*":
+          createNewDisplayValue(" x ")
+          break
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    const eventHandler = (e: KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === "=") {
+        doMath()
+      }
+    }
+    window.addEventListener("keydown", eventHandler)
+
+    return () => {
+      window.removeEventListener("keydown", eventHandler)
+    }
+  }, [displayValue])
+
   const isOperator = (val: string) => {
     return /[\+\-\/x]/.test(val)
   }
@@ -170,6 +216,80 @@ function App() {
     )
   }
 
+  const createNewValue = (prev: string, value: string): string => {
+    const newVal = prev.split(" ").filter(Boolean)
+    newVal[newVal.length - 1] = value
+    return newVal.join(" ")
+  }
+
+  const createNewDisplayValue = (value: string) => {
+    if (value === "=") {
+      doMath()
+    } else if (value === "AC") {
+      setDisplayValue("0")
+    } else {
+      if (displayValue.length < 20) {
+        setDisplayValue((prev) => {
+          if (prev === "0") {
+            // preventing operator in the beginning except for minus
+            return isOperator(value.trim()) && value.trim() !== "-"
+              ? "0"
+              : value
+          }
+          // preventing double 0's after operator
+          else if (prev.endsWith(" 0")) {
+            return createNewValue(prev, value)
+          }
+          // preventing double operators
+          else if (isOperator(value.trim())) {
+            const lastItem = prev.split(" ").filter(Boolean).slice(-1).join("")
+
+            if (prev.trim() === "-" && value.trim() !== "-") {
+              return "0"
+            }
+            // if already operator exist replace it otherwise add it
+            else if (isOperator(lastItem)) {
+              // allowing negative number after other operator
+              if (
+                value.trim() === "-" &&
+                lastItem !== "-" &&
+                lastItem !== "+"
+              ) {
+                isDoubleOperator = true
+                return prev + value
+              } else if (!isDoubleOperator) {
+                return createNewValue(prev, value)
+              } else {
+                isDoubleOperator = false
+
+                const newVal = prev.split(" ").filter(Boolean)
+                newVal.pop()
+                newVal[newVal.length - 1] = value
+
+                return newVal.join(" ")
+              }
+            } else {
+              isDoubleOperator = false
+              return prev + value
+            }
+          } else if (value === ".") {
+            // preventing double decimals between operators
+            const lastItem = prev.split(" ").slice(-1).join("")
+            if (lastItem.includes(".")) {
+              return prev
+            } else if (lastItem.length) {
+              return prev + value
+            } else {
+              return prev + "0" + value
+            }
+          } else {
+            return prev + value
+          }
+        })
+      }
+    }
+  }
+
   return (
     <DisplayContext.Provider
       value={{
@@ -177,6 +297,7 @@ function App() {
         setDisplayValue: setDisplayValue,
         doMath: doMath,
         isOperator: isOperator,
+        createNewDisplayValue: createNewDisplayValue,
       }}
     >
       <main className="flex justify-center items-center h-dvh bg-slate-400 p-4">

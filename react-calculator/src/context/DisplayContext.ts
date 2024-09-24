@@ -5,6 +5,7 @@ interface Types {
   setDisplayValue: Dispatch<SetStateAction<string>>
   doMath: () => void
   isOperator: (val: string) => boolean
+  createNewDisplayValue: (value: string) => void
 }
 
 const DisplayContext = createContext<Types | null>(null)
