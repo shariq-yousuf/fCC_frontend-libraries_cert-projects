@@ -7,8 +7,7 @@ const Timer = () => {
     setLengths,
   } = useSessionContext()
   const [minutesLeft, setMinutesLeft] = useState(sessionLength)
-  // const [secondsLeft, setSecondsLeft] = useState(60)
-  let secondsLeft = 60
+  const [secondsLeft, setSecondsLeft] = useState(60)
   const [isTimerRunning, setIsTimerRunning] = useState(false)
 
   useEffect(() => {
@@ -17,16 +16,41 @@ const Timer = () => {
 
   useEffect(() => {
     if (isTimerRunning) {
-      setInterval(() => {
-        // setSecondsLeft(secondsLeft - 1)
-        secondsLeft--
-        console.log(secondsLeft)
-      }, 1000)
+      if (secondsLeft === 59) {
+        setMinutesLeft(minutesLeft - 1)
+      } else if (secondsLeft === 0) {
+        setSecondsLeft(60)
+      }
+
+      var interval = setInterval(() => {
+        setSecondsLeft(secondsLeft - 1)
+      }, 100)
+    } else {
+      clearInterval(interval!)
     }
-  }, [isTimerRunning])
+
+    if (minutesLeft === 0 && secondsLeft === 0) {
+      setIsTimerRunning(false)
+    }
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [isTimerRunning, secondsLeft])
 
   const handleTimer = () => {
     setIsTimerRunning((prev) => !prev)
+  }
+
+  const handleReset = () => {
+    setLengths({
+      sessionLength: 25,
+      breakLength: 5,
+    })
+
+    setIsTimerRunning(false)
+    setMinutesLeft(sessionLength)
+    setSecondsLeft(60)
   }
 
   return (
@@ -56,12 +80,7 @@ const Timer = () => {
         <button
           id="reset"
           className="px-4 py-2 bg-slate-600 text-white text-2xl"
-          onClick={() => {
-            setLengths({
-              sessionLength: 25,
-              breakLength: 5,
-            })
-          }}
+          onClick={handleReset}
         >
           Reset
         </button>

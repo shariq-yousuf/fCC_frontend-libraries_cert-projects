@@ -69,7 +69,7 @@ const Break = () => {
       flushSync(() => {
         setLengths((prev) => ({
           ...prev,
-          breakLength: prev.breakLength + 1,
+          breakLength: prev.breakLength - 1,
         }))
       })
     }
