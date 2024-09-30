@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import useSessionContext from "../hooks/useLengthsContext"
+import { initialState } from "../context/LengthsContext"
 
 const Timer = () => {
   const {
-    lengths: { sessionLength },
+    lengths: [, { value: sessionLength }],
     setLengths,
   } = useSessionContext()
   const [minutesLeft, setMinutesLeft] = useState(sessionLength)
@@ -43,10 +44,7 @@ const Timer = () => {
   }
 
   const handleReset = () => {
-    setLengths({
-      sessionLength: 25,
-      breakLength: 5,
-    })
+    setLengths(initialState)
 
     setIsTimerRunning(false)
     setMinutesLeft(sessionLength)
