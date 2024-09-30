@@ -4,12 +4,13 @@ import { initialState } from "../context/LengthsContext"
 
 const Timer = () => {
   const {
-    lengths: [, { value: sessionLength }],
+    lengths: [{ value: breakLength }, { value: sessionLength }],
     setLengths,
   } = useSessionContext()
   const [minutesLeft, setMinutesLeft] = useState(sessionLength)
   const [secondsLeft, setSecondsLeft] = useState(60)
   const [isTimerRunning, setIsTimerRunning] = useState(false)
+  const [isBreak, setIsBreak] = useState(false)
 
   useEffect(() => {
     setMinutesLeft(sessionLength)
@@ -30,8 +31,12 @@ const Timer = () => {
       clearInterval(interval!)
     }
 
-    if (minutesLeft === 0 && secondsLeft === 0) {
-      setIsTimerRunning(false)
+    if (minutesLeft === 0 && secondsLeft === 0 && !isBreak) {
+      setMinutesLeft(breakLength)
+      setIsBreak((prev) => !prev)
+    } else if (minutesLeft === 0 && secondsLeft === 0) {
+      setMinutesLeft(sessionLength)
+      setIsBreak((prev) => !prev)
     }
 
     return () => {
@@ -44,11 +49,11 @@ const Timer = () => {
   }
 
   const handleReset = () => {
-    setLengths(initialState)
-
     setIsTimerRunning(false)
+    setLengths(initialState)
     setMinutesLeft(sessionLength)
     setSecondsLeft(60)
+    setIsBreak(false)
   }
 
   return (
@@ -57,7 +62,7 @@ const Timer = () => {
       className="flex flex-col items-center gap-4 border-4 border-slate-950 md:w-1/2 p-4 my-4 mx-auto"
     >
       <div id="timer-label" className="text-3xl font-bold">
-        Session
+        {isBreak ? "Break" : "Session"}
       </div>
       <div id="time-left" className="text-5xl font-bold">
         {minutesLeft < 10 ? `0${minutesLeft}` : minutesLeft}:
