@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import useSessionContext from "../hooks/useLengthsContext"
 import { initialState } from "../context/LengthsContext"
+import useGlobalContext from "../hooks/useGlobalContext"
 
 const Timer = () => {
   const {
@@ -9,8 +10,8 @@ const Timer = () => {
   } = useSessionContext()
   const [minutesLeft, setMinutesLeft] = useState(sessionLength)
   const [secondsLeft, setSecondsLeft] = useState(60)
-  const [isTimerRunning, setIsTimerRunning] = useState(false)
-  const [isBreak, setIsBreak] = useState(false)
+  const { isTimerRunning, setIsTimerRunning, isBreak, setIsBreak, audioEl } =
+    useGlobalContext()
 
   useEffect(() => {
     setMinutesLeft(sessionLength)
@@ -26,7 +27,7 @@ const Timer = () => {
 
       var interval = setInterval(() => {
         setSecondsLeft(secondsLeft - 1)
-      }, 100)
+      }, 1000)
     } else {
       clearInterval(interval!)
     }
@@ -50,6 +51,8 @@ const Timer = () => {
 
   const handleReset = () => {
     setIsTimerRunning(false)
+    audioEl.current?.pause()
+    audioEl.current!.currentTime = 0
     setLengths(initialState)
     setMinutesLeft(sessionLength)
     setSecondsLeft(60)
