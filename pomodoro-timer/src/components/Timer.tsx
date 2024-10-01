@@ -25,11 +25,11 @@ const Timer = () => {
         setSecondsLeft(60)
       }
 
-      var interval = setInterval(() => {
+      var interval = setTimeout(() => {
         setSecondsLeft(secondsLeft - 1)
       }, 1000)
     } else {
-      clearInterval(interval!)
+      clearTimeout(interval!)
     }
 
     if (minutesLeft === 0 && secondsLeft === 0 && !isBreak) {
@@ -41,7 +41,7 @@ const Timer = () => {
     }
 
     return () => {
-      clearInterval(interval)
+      clearTimeout(interval)
     }
   }, [isTimerRunning, secondsLeft])
 
