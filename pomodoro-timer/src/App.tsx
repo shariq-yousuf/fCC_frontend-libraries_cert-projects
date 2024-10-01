@@ -1,6 +1,4 @@
 import { useRef, useState } from "react"
-// import Break from "./components/Break"
-// import Session from "./components/Session"
 import SessionContext, { initialState } from "./context/LengthsContext"
 import Timer from "./components/Timer"
 import Length from "./components/Length"
@@ -35,8 +33,6 @@ function App() {
               Pomodoro Timer
             </h1>
             <div id="lengths-container" className="flex justify-around gap-4">
-              {/* <Break />
-            <Session /> */}
               {lengths.map(({ title, value }) => (
                 <Length key={title} length={value} title={title} />
               ))}
