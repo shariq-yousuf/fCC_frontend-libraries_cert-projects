@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/audio.tsx","./src/components/break.tsx","./src/components/length.tsx","./src/components/session.tsx","./src/components/timer.tsx","./src/context/globalcontext.ts","./src/context/lengthscontext.ts","./src/hooks/useglobalcontext.ts","./src/hooks/uselengthscontext.ts"],"version":"5.6.2"}
