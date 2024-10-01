@@ -62,9 +62,9 @@ const Timer = () => {
   return (
     <div
       id="timer-container"
-      className="flex flex-col items-center gap-4 border-4 border-slate-950 md:w-1/2 p-4 my-4 mx-auto"
+      className="flex flex-col items-center gap-4 rounded border-4 border-slate-950 md:w-1/2 p-4 my-4 mx-auto"
     >
-      <div id="timer-label" className="text-3xl font-bold">
+      <div id="timer-label" className="text-3xl font-bold text-amber-400">
         {isBreak ? "Break" : "Session"}
       </div>
       <div id="time-left" className="text-5xl font-bold">
@@ -78,14 +78,14 @@ const Timer = () => {
       <div id="buttons-container">
         <button
           id="start_stop"
-          className="px-4 py-2 me-4 bg-slate-600 text-white text-2xl"
+          className="px-4 py-2 me-4 bg-amber-400 w-28 rounded text-2xl"
           onClick={handleTimer}
         >
-          Start
+          {isTimerRunning ? "Pause" : "Start"}
         </button>
         <button
           id="reset"
-          className="px-4 py-2 bg-slate-600 text-white text-2xl"
+          className="px-4 py-2 bg-amber-400 w-28 rounded text-2xl"
           onClick={handleReset}
         >
           Reset

@@ -1,8 +1,10 @@
 import { flushSync } from "react-dom"
 import useLengthsContext from "../hooks/useLengthsContext"
+import useGlobalContext from "../hooks/useGlobalContext"
 
 const Length = ({ length, title }: { length: number; title: string }) => {
   const { setLengths } = useLengthsContext()
+  const { isTimerRunning } = useGlobalContext()
 
   const handleDecrement = () => {
     if (length > 1) {
@@ -36,18 +38,20 @@ const Length = ({ length, title }: { length: number; title: string }) => {
       <div id="btns-container" className="flex justify-center">
         <button
           id={`${title}-decrement`}
-          className="px-4"
+          className="px-4 disabled:opacity-50"
           onClick={handleDecrement}
+          disabled={isTimerRunning}
         >
-          -
+          <img src="/icons/arrow-downward.svg" alt="" />
         </button>
         <p id={`${title}-length`}>{length}</p>
         <button
           id={`${title}-increment`}
-          className="px-4"
+          className="px-4 disabled:opacity-50"
           onClick={handleIncrement}
+          disabled={isTimerRunning}
         >
-          +
+          <img src="/icons/arrow-upward.svg" alt="" />
         </button>
       </div>
     </div>
